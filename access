@@ -1,0 +1,33 @@
+Private Sub CommandButtonSave_Click()
+    Dim data_demanda As String
+    Dim data_demanda2 As String
+    'Dim quantity As Integer
+    'Dim description As String
+    
+    data_demanda = TextBoxName.Text
+    data_demanda2 = TextBoxName2.Text
+    hora_demanda = "1000"
+    hora_atendimento = "1000"
+    'quantity = CInt(TextBoxQuantity.Text)
+    'description = TextBoxDescription.Text
+    
+    Dim con As ADODB.Connection
+    Set con = New ADODB.Connection
+    con.Open "DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\lusilbi\OneDrive - Banco Itaú SA\Desktop\Automações\ESTATISTICA_ OPERACOES_INTERFACE.accdb;"
+    Sql = "insert into estatistica(Data_Demanda, Data_Atendimento, Hora_Demanda, Hora_Atendimento) values('" & data_demanda & "', " & Format(Now, "DD/MM/YYYY") & ", " & hora_demanda & ", " & hora_atendimento & ")"
+    Dim affectedRow As Integer
+    con.Execute Sql, affectedRow
+    If affectedRow = 1 Then
+        MsgBox "Done"
+    Else
+        MsgBox "Failed"
+    End If
+    con.Close
+    
+    MsgBox Format(Now, "DD/MM/YYYY")
+    
+    
+
+End Sub
+
+
