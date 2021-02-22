@@ -1,0 +1,83 @@
+Private Sub CommandButton1_Click()
+MsgBox ComboBox1.Value & "    " & ComboBox2.Value & "    " & ComboBox3.Value & "    " & ComboBox4.Value
+End Sub
+Private Sub ComboBox1_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+    KeyAscii = 0
+End Sub
+Private Sub ComboBox2_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+    KeyAscii = 0
+End Sub
+Private Sub ComboBox3_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+    KeyAscii = 0
+End Sub
+Private Sub ComboBox4_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+    KeyAscii = 0
+End Sub
+
+Private Sub CommandButton2_Click()
+Dim Item As Outlook.MailItem
+Dim oInspector As Inspector
+Dim strSubject As String
+
+Set oInspector = Application.ActiveInspector
+If oInspector Is Nothing Then
+    Set Item = Application.ActiveExplorer.Selection.Item(1)
+Else
+   Set Item = oInspector.CurrentItem
+End If
+
+strSubject = Item.Subject
+
+' Remove previous Confidential and Legally Privileged
+'strSubject = Replace(strSubject, "Confidential and Legally Privileged ", "")
+
+' Prefix subject with Confidential and Legally Privileged
+strSubject = Format(Application.ActiveExplorer.Selection.Item(1).ReceivedTime, "hh:mm:ss") & "," & "    " & Format(Now, "YYYY-MM-DD") _
+& "    " & ComboBox1.Value & "    " & ComboBox2.Value & "    " & ComboBox3.Value & "    " & ComboBox4.Value
+
+' Set the message subject
+Item.Subject = strSubject
+
+
+Set Item = Nothing
+Set oInspector = Nothing
+
+
+End Sub
+
+Private Sub UserForm_Initialize()
+    With Me.ComboBox1
+        .AddItem "ITAU"
+        .AddItem "INTRAG"
+        .AddItem "ETC"
+        .AddItem "ETC2"
+    End With
+    Me.ComboBox1.Text = Me.ComboBox1.List(0)
+    
+     With Me.ComboBox2
+        .AddItem "Demanda de blablabla"
+        .AddItem "Demanda de deposito"
+        .AddItem "Demanda de resgate"
+        .AddItem "IR"
+        .AddItem "JUROS"
+    End With
+    Me.ComboBox2.Text = Me.ComboBox2.List(0)
+    
+    With Me.ComboBox3
+        .AddItem "Motivo de das"
+        .AddItem "ate"
+        .AddItem "Asspr"
+    End With
+    Me.ComboBox3.Text = Me.ComboBox3.List(0)
+    
+    With Me.ComboBox4
+        .AddItem "1"
+        .AddItem "2"
+        .AddItem "3"
+        .AddItem "4"
+    End With
+    Me.ComboBox4.Text = Me.ComboBox4.List(0)
+End Sub
+
+
+
